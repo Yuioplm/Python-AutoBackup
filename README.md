@@ -24,7 +24,7 @@ Python バックアップスクリプトです。
 
 対象フォルダは以下に固定されています。
 
-$env:USERPROFILE\Documents
+Path.home() / "Documents"
 
 
 ## 抽出条件
