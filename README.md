@@ -12,7 +12,7 @@ Python バックアップスクリプトです。
 このスクリプトは以下を行います。
 
 - Documents フォルダ配下を再帰的に走査
-- 指定期間内に更新されたファイルを抽出
+- 直近 30 日以内に更新されたファイルを抽出
 - フォルダ構造を保持したまま backup フォルダへコピー
 - コピー結果を CSV に出力
 - 実行ログを logs/backup.log に記録
@@ -42,7 +42,7 @@ Python-AutoBackup/
  │   └─ （バックアップされたファイル）  
  ├─ logs/  
  │   └─ backup.log  
- ├─ backup.ps1  
+ ├─ backup.py  
  └─ README.md
 
 ※ backup フォルダ、logs フォルダは実行時に自動作成されます。
@@ -86,8 +86,8 @@ logs/backup.log
 - 対象フォルダ
 - 基準日
 - 対象ファイル件数
-- 各ファイルのコピー結果
-- 成功件数 / スキップ件数
+- 各ファイルのコピー結果 SUCCESS / SKIPPED
+- SUMMARY を確認可能
 
 
 ### ログ例
