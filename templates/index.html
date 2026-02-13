@@ -3,35 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoBackup</title>
+    <title>Backup Tool</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+
+        table { border-collapse: collapse; width: 100px; }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        th { background-color: #f0f0f0; }
+
+        .success { background-color: #e6ffe6; }
+        .error {background-color: #ffe6e6;}
+
+        .summary {
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>AutoBackup</h1>
+    <h1>Backup Tool</h1>
 
-    <form method="post"  action="/run-backup">
+    <h2>Run Backup</h2>
+
+    <form method="POST"  action="/run">
         <label>
-            Source directory:
-            <input type="text" name="source" required>
+            Source Directory:
         </label>
+        <input type="text" name="source" required style="width: 400px;">
         <br><br>
 
         <label>
-            Backup directory:
-            <input type="text" name="backup" required>
+            Destination Directory:
         </label>
+        <input type="text" name="destination" required style="width: 400px;">
         <br><br>
         
         <label>
             Days:
-            <input type="number" name="days" value="30">
         </label>
+        <input type="number" name="days" value="30">
         <br><br>
         
         <button type="submit">Run Backup</button>
     </form>
     
-    {% if message %}
-        <p><strong>{{message}}</strong></p>
+    <hr>
+
+    <h2>Backup Result</h2>
+
+    {% if records  %}
+    <p>Total Files: {{ records|length }}</p>
+
+    <table>
+        <tr>
+            <th>FileName</th>
+            <th>OriginalPath</th>
+            <th>LastWriteTime</th>
+            <th>CopiedAt</th>
+            <th>Status</th>
+        </tr>
+
+        {%  for r in records %}
+        <tr class="{% if r.Status == 'Success' %}success{% else %}error{% endif %}">
+            <td>{{ r.FileName }}</td>
+            <td>{{ r.OriginalPath }}</td>
+            <td>{{ r.LastWriteTime }}</td>
+            <td>{{ r.CopiedAt }}</td>
+            <td>{{ r.Status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% else %}
+    <p>No backup records.</p>
     {% endif %}
 
 </body>
