@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, request
 from pathlib import Path
 from datetime import datetime, timedelta
 
@@ -43,7 +43,7 @@ def run_backup():
         message = f"Backup finished: Success={success}, Skipped={skipped}"
 
     except Exception as e:
-        message =f"Backup failed: {e}"
+        message = f"Backup failed: {e}"
     
     return render_template("index.html", message=message)
 

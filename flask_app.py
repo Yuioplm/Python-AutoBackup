@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from pathlib import Path
+from datetime import datetime, timedelta
 import csv
 
 # 既存のバックアップ処理を再利用
@@ -38,10 +39,11 @@ def run_backup():
 
     source = request.form.get("source")
     destination = request.form.get("destination")
-    border_date = request.form.get("days")
+    days = request.form.get("days")
 
     source_path = Path(source).resolve()
     destination_path = Path(destination).resolve()
+    border_date = datetime.now() - timedelta(days=int(days))
 
     # バックアップ実行
     result = backup_files(source_path, destination_path, border_date)
